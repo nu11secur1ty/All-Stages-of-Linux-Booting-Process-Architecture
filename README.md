@@ -1,4 +1,4 @@
-
+![image](https://raw.githubusercontent.com/nu11secur1ty/All-Stages-of-Linux-Booting-Process-/master/boot-process-chart.jpg)
 
 
 #All Stages of Linux Booting Process Explained
