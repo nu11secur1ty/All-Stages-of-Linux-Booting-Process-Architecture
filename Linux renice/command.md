@@ -32,6 +32,28 @@ renice -h | -v
 -v, --version 	Display version information, and exit.
 -h, --help 	Display a help message, and exit.
 ```
+- more
+```bash
+renice --help
+
+Usage:
+ renice [-n] <priority> [-p|--pid] <pid>...
+ renice [-n] <priority>  -g|--pgrp <pgid>...
+ renice [-n] <priority>  -u|--user <user>...
+
+Alter the priority of running processes.
+
+Options:
+ -n, --priority <num>   specify the nice increment value
+ -p, --pid <id>         interpret argument as process ID (default)
+ -g, --pgrp <id>        interpret argument as process group ID
+ -u, --user <name>|<id> interpret argument as username or user ID
+
+ -h, --help             display this help
+ -V, --version          display version
+```
+
+
 - Priority
 
 Users other than the superuser may only alter the priority of processes they own, and can only monotonically increase their "nice value" within the range 0 to PRIO_MAX (20). The superuser may alter the priority of any process and set the priority to any value in the range PRIO_MIN (-20) to PRIO_MAX.
