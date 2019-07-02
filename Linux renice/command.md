@@ -13,3 +13,23 @@ renice'ing a process group causes all processes in the process group to have the
 renice'ing a user causes all processes owned by the user to have their scheduling priority altered.
 
 By default, the processes to be affected are specified by their process ID's.
+
+
+# Syntax
+
+```bash
+renice [-n] priority [[-p] pid who...] [[-g] pgrp who...] [[-u] user who...]
+```
+```bash
+renice -h | -v
+```
+- Options
+```table
+-n, --priority 	The scheduling priority of the process, process group, or user.
+-g, --pgrp 	Force who parameters to be interpreted as process group ID's.
+-u, --user 	Force the who parameters to be interpreted as user names.
+-p, --pid 	Resets the who interpretation to be (the default) process ID's.
+-v, --version 	Display version information, and exit.
+-h, --help 	Display a help message, and exit.
+```
+
