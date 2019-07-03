@@ -41,6 +41,37 @@ However, if the parent process isn’t programmed properly and is ignoring SIGCH
 
 If a parent process continues to create zombies, it should be fixed so that it properly calls wait() to reap its zombie children. File a bug report if a program on your system keeps creating zombies.
 
+- Example:
+```c
+/*
+* Any that need to be release_task'd are put on the @dead list.
+ */
+static void reparent_leader(struct task_struct *father, struct task_struct *p,
+				struct list_head *dead)
+{
+	if (unlikely(p->exit_state == EXIT_DEAD))
+		return;
+
+	/* We don't want people slaying init. */
+	p->exit_signal = SIGCHLD;
+
+	/* If it has exited notify the new parent about this child's death. */
+	if (!p->ptrace &&
+	    p->exit_state == EXIT_ZOMBIE && thread_group_empty(p)) {
+		if (do_notify_parent(p, p->exit_signal)) {
+			p->exit_state = EXIT_DEAD;
+			list_add(&p->ptrace_entry, dead);
+		}
+	}
+
+	kill_orphaned_pgrp(p, father);
+}
+```
+[Read more](https://elixir.bootlin.com/linux/v5.0/source/kernel/exit.c#L650)
+
+
+
+
 ----------------------------------------------------------------------------------------------
 
 by `Chris Hoffman`
