@@ -74,7 +74,9 @@ static void reparent_leader(struct task_struct *father, struct task_struct *p,
 
 ----------------------------------------------------------------------------------------------
 
-by `Chris Hoffman`
+by `Chris Hoffman` 
 
 ![](https://github.com/nu11secur1ty/All-Stages-of-Linux-Booting-Process-/blob/master/Zombie%20Process/author/cr.jpg)
+
+and supplement by `Ventsislav Varbanovski`
 
