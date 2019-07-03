@@ -43,5 +43,5 @@ If a parent process continues to create zombies, it should be fixed so that it p
 
 ----------------------------------------------------------------------------------------------
 by `Chris Hoffman`
-
+![](https://github.com/nu11secur1ty/All-Stages-of-Linux-Booting-Process-/blob/master/Zombie%20Process/author/cr.jpg)
 
