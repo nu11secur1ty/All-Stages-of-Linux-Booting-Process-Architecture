@@ -42,6 +42,8 @@ However, if the parent process isn’t programmed properly and is ignoring SIGCH
 If a parent process continues to create zombies, it should be fixed so that it properly calls wait() to reap its zombie children. File a bug report if a program on your system keeps creating zombies.
 
 ----------------------------------------------------------------------------------------------
+
 by `Chris Hoffman`
+
 ![](https://github.com/nu11secur1ty/All-Stages-of-Linux-Booting-Process-/blob/master/Zombie%20Process/author/cr.jpg)
 
