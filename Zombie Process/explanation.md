@@ -80,4 +80,4 @@ by `Chris Hoffman`
 
 and supplement by `Ventsislav Varbanovski`
 
-![]()
+![](https://github.com/nu11secur1ty/All-Stages-of-Linux-Booting-Process-/blob/master/Zombie%20Process/author/V.jpg)
