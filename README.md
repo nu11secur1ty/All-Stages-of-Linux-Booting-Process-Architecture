@@ -19,10 +19,11 @@ In case of hard disks and many other mass storage media, the boot sector is MBR.
 * Next 64 bytes contain partition information for 4 partitions (16x4). That is why the hard disks can have only 4 primary partitions, as the MBR can store information for 4 partitions only. So if you need more than 4 partitions on the hard disk, one of the primary partition has to be made extended, and out of this extended partition, logical partitions are created.
 * Last 2 bytes are for MBR signature, also called magic number. (Thus total of 446 + 64 + 2 = 512 bytes).
 
+```
 |=================|======|======|======|======|===|
-
-| 446 | 16 | 16 | 16 | 16 | 2 |
+|      446        |  16  |  16  |  16  |  16  | 2 |
 |=================|======|======|======|======|===|
+```
 
 The first 446 bytes of MBR contain the code that locates the partition to boot from. The rest of booting process takes place from that partition. This partition contains a software program for booting the system called the 'bootloader'.
 # 3. About GRUB
