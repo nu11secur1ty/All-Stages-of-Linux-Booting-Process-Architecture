@@ -12,7 +12,7 @@ After the kernel is initialized, it launches systemd process. Detailed Linux boo
 systemd provides parallelized boot, uses sockets and d-bus activation for starting services, offers on-demand daemon launch, etc. We can easily attach our own daemons to systemd by creating service scripts in either /lib/systemd/system or /etc/systemd/system directories. For the daemons to be automatically and normally launched, we need to acknowledge the systemd launch process, which this post will investigate more.
 
 ---------------------------------------------------------------------------------------------------------------------------
-- The following chart is a structural overview of well-known systemd units and their position in the boot-up logic, according to freedesktop. The chart comes from
+- The following chart is a structural overview of well-known systemd units and their position in the boot-up logic.
 
 ![](https://github.com/nu11secur1ty/All-Stages-of-Linux-Booting-Process-/blob/master/SYSTEMD/boot/systemd_boot.png)
 
@@ -33,7 +33,7 @@ ExecStart=/usr/bin/echo 'Hello'
 WantedBy=multi-user.target
 ```
 
-as illustrated in freedesktop systemd.target manual.
+- target manual.
 
 timers.target, paths.target, and sockets.target are special targets for the initialization of timers, paths, and sockets, respectively. These targets have default dependencies: target unites are automatically configured with:
 
