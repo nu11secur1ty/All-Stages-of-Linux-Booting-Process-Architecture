@@ -3,7 +3,8 @@
 - What is systemd?
 
 ```
-systemd is a suite of basic building blocks for a Linux system. It provides a system and service manager that runs as PID 1 and starts the rest of the system.
+Systemd is a suite of basic building blocks for a Linux system. 
+It provides a system and service manager that runs as PID 1 and starts the rest of the system.
 ```
 Systemd is now the init process running as PID 1 as indicated above. /sbin/init was the actual init process of Linux (also known as System V init boot system), it is now replaced with /usr/lib/systemd in many Linux distributions.
 
