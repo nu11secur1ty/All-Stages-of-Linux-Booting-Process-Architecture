@@ -39,13 +39,13 @@ WantedBy=multi-user.target
 timers.target, paths.target, and sockets.target are special targets for the initialization of timers, paths, and sockets, respectively. These targets have default dependencies: target unites are automatically configured with:
 
 
-. After=sysinit.target,
+- After=sysinit.target,
 
-. Requires=sysinit.target,
+- Requires=sysinit.target,
 
-. Before=shutdown.target,
+- Before=shutdown.target,
 
-. and Conflicts=shutdown.target.
+- and Conflicts=shutdown.target.
 
 
 Those default dependencies can be ignored with the following statement in the unit: DefaultDependencies=no. For example, udev.service uses two sockets: systemd-udevd-control.socket and systemd-udevd-kernel.socket. In the chart above, udev.service should be initialized in the stage before sysinit.target. Therefore, all udev.service, systemd-udevd-control.socket, and systemd-udevd-kernel.socket have DefaultDependencies=no statement to avoid those default dependencies.
