@@ -239,7 +239,7 @@ After this script has executed, the runlevel specific files are run, according t
 l3:3:wait:/etc/rc.d/rc 3
 ```
 There are directories corresponding to each runlevel under "/etc/rc.d" directory. According to this line, the scripts in /etc/rc.d/rc3.d directory are run. Let’s list the files in this directory. (Other directories like rc1.d, rc2.d ... have similar files in them).
-```
+```bash
 [root@redhat-server ~]# ls -l /etc/rc.d/rc3.d/
 total 304
 lrwxrwxrwx 1 root root 17 Jul 3 03:51 K01dnsmasq -> ../init.d/dnsmasq
@@ -284,6 +284,43 @@ lrwxrwxrwx 1 root root 21 Jul 3 03:51 S12restorecond -> ../init.d/restorecond
 lrwxrwxrwx 1 root root 16 Jul 3 03:51 S12syslog -> ../init.d/syslog
 lrwxrwxrwx 1 root root 18 Jul 3 03:49 S13cpuspeed -> ../init.d/cpuspeed
 ```
+# Ubuntu 19.10
+```bash
+lrwxrwxrwx 1 root root 29 дек  6  2018 K01apache-htcacheclean -> ../init.d/apache-htcacheclean
+lrwxrwxrwx 1 root root 27 окт 12  2018 K01speech-dispatcher -> ../init.d/speech-dispatcher
+lrwxrwxrwx 1 root root 15 окт 12  2018 S01acpid -> ../init.d/acpid
+lrwxrwxrwx 1 root root 17 окт 12  2018 S01anacron -> ../init.d/anacron
+lrwxrwxrwx 1 root root 17 дек  6  2018 S01apache2 -> ../init.d/apache2
+lrwxrwxrwx 1 root root 16 окт 12  2018 S01apport -> ../init.d/apport
+lrwxrwxrwx 1 root root 22 окт 12  2018 S01avahi-daemon -> ../init.d/avahi-daemon
+lrwxrwxrwx 1 root root 19 окт 12  2018 S01bluetooth -> ../init.d/bluetooth
+lrwxrwxrwx 1 root root 24 юли 24 16:31 S01cgroupfs-mount -> ../init.d/cgroupfs-mount
+lrwxrwxrwx 1 root root 26 окт 12  2018 S01console-setup.sh -> ../init.d/console-setup.sh
+lrwxrwxrwx 1 root root 14 окт 12  2018 S01cron -> ../init.d/cron
+lrwxrwxrwx 1 root root 14 окт 12  2018 S01cups -> ../init.d/cups
+lrwxrwxrwx 1 root root 22 окт 12  2018 S01cups-browsed -> ../init.d/cups-browsed
+lrwxrwxrwx 1 root root 14 окт 12  2018 S01dbus -> ../init.d/dbus
+lrwxrwxrwx 1 root root 16 юли 24 16:31 S01docker -> ../init.d/docker
+lrwxrwxrwx 1 root root 14 окт 12  2018 S01gdm3 -> ../init.d/gdm3
+lrwxrwxrwx 1 root root 21 окт 12  2018 S01grub-common -> ../init.d/grub-common
+lrwxrwxrwx 1 root root 20 окт 12  2018 S01irqbalance -> ../init.d/irqbalance
+lrwxrwxrwx 1 root root 20 окт 12  2018 S01kerneloops -> ../init.d/kerneloops
+lrwxrwxrwx 1 root root 16 ное 28  2018 S01kibana -> ../init.d/kibana
+lrwxrwxrwx 1 root root 23 фев 22  2019 S01lvm2-lvmpolld -> ../init.d/lvm2-lvmpolld
+lrwxrwxrwx 1 root root 15 ное 29  2018 S01mysql -> ../init.d/mysql
+lrwxrwxrwx 1 root root 18 окт 12  2018 S01plymouth -> ../init.d/plymouth
+lrwxrwxrwx 1 root root 15 окт 12  2018 S01rsync -> ../init.d/rsync
+lrwxrwxrwx 1 root root 17 окт 12  2018 S01rsyslog -> ../init.d/rsyslog
+lrwxrwxrwx 1 root root 15 окт 12  2018 S01saned -> ../init.d/saned
+lrwxrwxrwx 1 root root 23 окт 12  2018 S01spice-vdagent -> ../init.d/spice-vdagent
+lrwxrwxrwx 1 root root 13 дек  5  2018 S01ssh -> ../init.d/ssh
+lrwxrwxrwx 1 root root 20 юли 24 16:31 S01ubuntu-fan -> ../init.d/ubuntu-fan
+lrwxrwxrwx 1 root root 29 окт 12  2018 S01unattended-upgrades -> ../init.d/unattended-upgrades
+lrwxrwxrwx 1 root root 15 окт 12  2018 S01uuidd -> ../init.d/uuidd
+lrwxrwxrwx 1 root root 22 мар 29  2019 S01vmware-tools -> ../init.d/vmware-tools
+lrwxrwxrwx 1 root root 18 окт 12  2018 S01whoopsie -> ../init.d/whoopsie
+```
+
 Some files in this directory start with S and others with K. The files starting with S correspond to the scripts that are to be 'started' in that particular runlevel, and the ones with K correspond to the ones that are to be 'killed'. These files are just soft links to scripts under "/etc/rc.d/init/d" directory (One soft link points to "/etc/rc.local" which itself is a soft link to "/etc/rc.d/rc/local"). The scripts in "/etc/rc.d/init.d/" are daemons. Daemons are the processes that run in background and provide some kind of service, like http daemon (httpd) provides web service.
 
 After all these scripts have been executed, then finally "/etc/rc.local" script runs. If there is some command or script that you want to be executed at system startup, you can put it in this script.
