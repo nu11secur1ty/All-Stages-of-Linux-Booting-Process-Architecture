@@ -2,16 +2,17 @@
 
 
 # All Stages of Linux Booting Process Explained
+
 This article describes linux booting process in detail, what are the steps involved, which scripts are run, what configuration files are read and their order, from turning on the system till getting the login prompt.
 Although this article projects a general view of booting a Linux system, but some configuration files and commands can be Red Hat specific. 
 You can also download linux boot process pdf version for future reference.
-#1. BIOS Initialization
+# 1. BIOS Initialization
 BIOS, the Basic Input Output System is a firmware program that performs a very basic level of interaction with hardware. This is the first program that takes control when the computer is powered on.The BIOS performs a test on all the hardware component and peripherals called POST, the “Power On Self Test”. It initializes required hardware for booting.
 
 After POST executes successfully, BIOS looks for a boot device from a list of devices. Modern BIOSs allow you to configure this order of devices (sometimes called boot preference) that BIOS checks for booting. These boot devices can be any one of floppy drive, CDROM, hard drive, a network interface or other removable media (such as USB flash drive).
 
 The BIOS checks for the boot sector on the bootable device. Boot sector is the first physical sector on the storage device, and contains the code required for booting the machine.
-#2. The Master Boot Record
+# 2. The Master Boot Record
 In case of hard disks and many other mass storage media, the boot sector is MBR. MBR consists of 512 bytes at the first sector of the hard disk. It is important to note that MBR is not located inside any partition. MBR precedes the first partition. The layout of MBR is as follows:
 
 • First 446 bytes contain bootable code.
@@ -23,13 +24,17 @@ In case of hard disks and many other mass storage media, the boot sector is MBR.
 |=================|======|======|======|======|===|
 
 The first 446 bytes of MBR contain the code that locates the partition to boot from. The rest of booting process takes place from that partition. This partition contains a software program for booting the system called the 'bootloader'.
-#3. About GRUB
+# 3. About GRUB
 According to gnu.org, "A bootloader is the first software program that runs when a computer starts". GRUB or GRand Unified Bootloader is the bootloader program for Linux like operating systems. There are mainly two versions of Grub is available (Grub version 1 and 2). Now most linux ditros started using grub version 2. One main feature of grub is that it can be installed using linux image and no need for running operating system.
 
 Grub is a multi-stage bootloader (Stage1 ,Stage 1.5 and Stage 2). 3 stages for grub version 1 and grub version 2 is explained below.
-#Grub Version 1 stages
+
+--------------------------------------------------------------------------------------------------------------------------
+
+# Grub Version 1 stages
 Stage 1 can load Stage 2 directly, but it is normally set up to load Stage 1.5. GRUB Stage 1.5 is located in the first 30 kilobytes of hard disk immediately following the MBR and before the first partition. If this space is not available (Unusual partition table, special disk drivers, GPT or LVM disk) the install of Stage 1.5 will fail. The stage 1.5 image contains file system drivers. This enables stage 1.5 to directly load stage 2 from any known location in the filesystem, for example from /boot/grub. Stage 2 will then load the default configuration file and any other modules needed.
-#Grub Version 2 stages
+
+# Grub Version 2 stages
 Stage 1 -> boot.img is stored in the MBR (or optionally in any of the volume boot records) and addresses the next Stage by an LBA48 address (the 1024 cylinder boundary of GRUB legacy is omitted); at installation time it is configured to load the first sector of core.img
 
 Stage 1.5 -> core.img is by default written to the sectors between the MBR and the first partition, when this sectors are free and available. For legacy reasons, the first partition of a harddisc does not begin at sector 1 (counting begins with 0) but at sector 63 leaving a gap of 63 sectors of empty space, that is not part of any partition of file system and therefor not prone to any problems related with it. Once executed, core.img will load its configuration file and any other modules needed, particularly file system drivers; at installation time, it is generated from diskboot.img and configured to load stage 2.
@@ -37,7 +42,8 @@ Stage 1.5 -> core.img is by default written to the sectors between the MBR and t
 Refer at bottom of this page for boot process using grub version 2
 
 Stage 2 -> files belonging to stage 2 are all being held in the /boot/grub-directory, which is a sub-directory of /boot/ directory.
-#Grub Boot Stage Errors
+
+# Grub Boot Stage Errors
 ```
     Grub Stage 1 Errors
 
@@ -89,7 +95,7 @@ Here is a sample grub.conf:
 # root (hd0,0)
 # kernel /vmlinuz-version ro root=/dev/VolGroup00/LogVol00
 # initrd /initrd-version.img
-#boot=/dev/sda
+# boot=/dev/sda
 default=0
 timeout=5
 splashimage=(hd0,0)/grub/splash.xpm.gz
@@ -113,7 +119,8 @@ Corresponding to this menu entry, the first command, i.e. "root (hd0,0)" specifi
 The second command i.e. "kernel /vmlinuz-2.6.18-238.el5 ro root=/dev/VolGroup00/LogVol00" tells which kernel image to use (in this case vmlinuz-2.6.18-238.el5). The arguments to this command are 'ro' and 'root'. 'root' specifies the device on which root directory of the filesystem (i.e. / directory) is located; 'ro' means that this partition is to be mounted in read only mode (i.e. the kernel mounts the root partition in read only mode). Note that the partition for root filesystem and the partition on which this kernel image resides (i.e. boot partition) are different.
 
 The third command is the location of initrd. Before going into the details of what initrd is, let's look at a problem caused at the boot time.
-#The Chicken / Egg Module Problem and initrd
+
+# The Chicken / Egg Module Problem and initrd
 The kernel needs to mount the root filesystem (as specified in the second command above). This filesystem may be on some partition with one of the following capabilities:
 ```
 • Logical Volume Management
@@ -126,11 +133,14 @@ The Linux kernel does not have these features compiled into it. But they are pre
 The kernel and GRUB provide a solution through initrd, the initial RAM disk. It contains the modules needed to mount the filesystem, and only modules needed for that filesystem are included.
 
 GRUB also supports chainloading, the method used to pass control to other bootoader. Chainloading is used by GRUB to boot operating systems like windows. This can be checked in the above configuration file, under the title Windows XP Pro.
-#4. Kernel Initialization
+
+# 4. Kernel Initialization
 After GRUB stage 2, the location of kernel and necessary modules through initrd are known. Now the kernel is loaded into memory and initialized. The initrd image is compiled and mounted into the memory. It serves as a temporary root file system and helps kernel to boot properly without mounting any root file system. Now that all the drivers are loaded into memory, and kernel has booted, kernel mounts the root filesystem in read only mode, and starts the first process.
-#5. The init Process
+
+# 5. The init Process
 ‘init’ is the first process started by kernel (initialization process). It is parent of all processes. The PID (Process ID) of init process is always 1. This process persists till the computer halts. It is responsible for the whole state of system. The settings for this process are stored in its configuration file, /etc/inittab (system initialization table).Before diving deeper into the details of this file and proceeding any further with the boot process, let’s discuss about runlevels
-#6. Runlevels
+
+# 6. Runlevels
 Runlevel is the state in which a system boots. It can boot in a single user mode, multiuser mode, with networking, and with graphics etc. Following are the default runlevels defined by Linux:
 ```
 0: Halt or shutdown the system
@@ -219,7 +229,8 @@ Now let's look at some entries in this file. The first uncommented line, i.e. "i
 si::sysinit:/etc/rc.d/rc.sysinit
 ```
 This line tells init process to execute "/etc/rc.d/rc.sysinit" script. This is the first script executed by init during booting process.
-#7. Script rc.sysinit
+
+# 7. Script rc.sysinit
 When this script executes, it asks the user for interactive setup (Press 'I' to enter interactive startup). This script performs a lot of functions for the system that include:
 
 • Setting hostname
