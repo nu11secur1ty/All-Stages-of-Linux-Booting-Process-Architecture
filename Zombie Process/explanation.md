@@ -78,6 +78,6 @@ by `Chris Hoffman`
 
 ![](https://github.com/nu11secur1ty/All-Stages-of-Linux-Booting-Process-/blob/master/Zombie%20Process/author/cr.jpg)
 
-and `Ventsislav Varbanovski`
+and more from `Ventsislav Varbanovski`
 
 ![](https://github.com/nu11secur1ty/All-Stages-of-Linux-Booting-Process-/blob/master/Zombie%20Process/author/V.jpg)
